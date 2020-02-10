@@ -3,16 +3,20 @@
 		<h1 class="text-4xl mb-3">Character Creator</h1>
 		<div class="container p-3 mt-5">
 			<Attributes @set-attributes="updateAttributes" v-if="$store.state.character.attributes === null"></Attributes>
+			<Race v-if="$store.state.character.attributes !== null"></Race>
 		</div>
   </div>
 </template>
 
 <script>
 import Attributes from '@/components/creator/Attributes.vue'
+import Race from '@/components/creator/Race.vue'
+
 export default {
   name: 'CharacterCreator',
 	components: {
-		Attributes
+		Attributes,
+		Race
 	},
 	methods: {
 		updateAttributes(attributes) {
