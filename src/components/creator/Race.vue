@@ -66,7 +66,21 @@
 				</template>
 			</dl>
 		</div>
+		<p v-if="raceDescription.trait_options">
+		<b>Extra traits</b> ({{ traitLeft }})
+		<br>
+			<template v-for="trait in raceDescription.trait_options.from">
+				<span class="mr-4" :key="trait.name">
+				<input type="checkbox" :disabled="traitLeft < 1 && !trait.checked" v-model="trait.checked">
+				{{ trait.name }}
+				</span>
+			</template>
+		</p>
 
+	</div>
+
+	<div v-if="raceComplete">
+		<button @click="nextPart" class="bg-red-500 text-white font-semibold hover:text-red-900 py-2 px-4 rounded">Next</button>
 	</div>
 </div>
 </template>
@@ -164,6 +178,43 @@ export default {
 				}
 			})
 			return count
+		},
+		traitLeft() {
+			let count = this.raceDescription.trait_options.choose
+			this.raceDescription.trait_options.from.forEach(trait => {
+				if (trait.checked) {
+					count--
+					if (count < 1) {
+						return count
+					}
+				}
+			})
+			return count
+		},
+		raceComplete() {
+			if (!this.raceDescription) return false
+
+			if (this.raceDescription.starting_proficiency_options) {
+				if (this.profLeft > 0) return false
+			}
+
+			if (this.raceDescription.language_options) {
+				if (this.langLeft > 0) return false
+			}
+
+			if (this.raceDescription.trait_options) {
+				if (this.traitLeft > 0) return false
+			}
+			
+			if (this.raceDescription.subraces.length > 0 && !this.subRaceDescription) return false
+
+			if (this.raceDescription.subraces.length > 0 && this.subRaceDescription) {
+				if (this.subRaceDescription.language_options) {
+					if (this.subLangLeft > 0) return false
+				}
+			}
+
+			return true
 		}
 	},
 	data() {
@@ -206,6 +257,16 @@ export default {
 						this.allTraits.push(result)
 					})
 			})
+		},
+		nextPart() {
+			const selectedRace = {
+				race: this.race,
+				raceDescription: this.raceDescription,
+				subrace: this.subRace,
+				subRaceDescription: this.subRaceDescription
+			}
+			
+			this.$emit('set-race', selectedRace)
 		}
 	}
 }
