@@ -4,7 +4,7 @@
 		<div class="container p-3 mt-5">
 			<Attributes @set-attributes="updateAttributes" v-if="$store.state.character.attributes === null"></Attributes>
 			<Race @set-race="updateRace" v-if="$store.state.character.attributes !== null && $store.state.character.race === null"></Race>
-			<Class v-if="$store.state.character.race !== null && $store.state.character.class === null"></Class>
+			<Class @set-class="updateClass" v-if="$store.state.character.race !== null && $store.state.character.class === null"></Class>
 		</div>
   </div>
 </template>
@@ -20,6 +20,11 @@ export default {
 		Attributes,
 		Race,
 		Class
+	},
+	data() {
+		return {
+			spellcasting: false
+		}
 	},
 	methods: {
 		updateAttributes(attributes) {
@@ -38,6 +43,10 @@ export default {
 			this.updateAttributes(attributes)
 
 			this.$store.commit('setRace', selectedRace)
+		},
+		updateClass(selectedClass) {
+			this.$store.commit('setClass', selectedClass)
+			this.spellcasting = selectedClass.spellcasting
 		}
 	}
 }
