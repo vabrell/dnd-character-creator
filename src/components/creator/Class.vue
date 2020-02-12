@@ -173,8 +173,7 @@ export default {
 			const selectedClass = {
 				sClass: this.selectedClass,
 				classDescription: this.classDescription,
-				startingEquipment: this.startingEquipment,
-				spellcasting: this.spellcasting ? true : false
+				startingEquipment: this.startingEquipment
 			}
 
 			this.$emit('set-class', selectedClass)
