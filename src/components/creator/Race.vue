@@ -251,11 +251,14 @@ export default {
 		},
 		getTraitDescription(traits) {
 			traits.forEach(trait => {
-				fetch(`https://www.dnd5eapi.co${trait.url}`)
-					.then(response => response.json())
-					.then(result => {
-						this.allTraits.push(result)
-					})
+				const arr = this.allTraits.filter((v, i, s) => s.findIndex(v2 => v2.name === trait.name) === i)
+				if (arr.length < 1) {
+					fetch(`https://www.dnd5eapi.co${trait.url}`)
+						.then(response => response.json())
+						.then(result => {
+							this.allTraits.push(result)
+						})
+				}
 			})
 		},
 		nextPart() {
