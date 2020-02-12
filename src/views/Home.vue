@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import CharacterCreator from '@/components/CharacterCreator.vue'
 
 export default {

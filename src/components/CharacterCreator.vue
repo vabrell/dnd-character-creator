@@ -5,6 +5,7 @@
 			<Attributes @set-attributes="updateAttributes" v-if="$store.state.character.attributes === null"></Attributes>
 			<Race @set-race="updateRace" v-if="$store.state.character.attributes !== null && $store.state.character.race === null"></Race>
 			<Class @set-class="updateClass" v-if="$store.state.character.race !== null && $store.state.character.class === null"></Class>
+			<Summary :attributes="$store.state.character.attributes" :race="$store.state.character.race" :selClass="$store.state.character.class" v-if="$store.state.character.attributes && $store.state.character.race && $store.state.character.class"></Summary>
 		</div>
   </div>
 </template>
@@ -13,13 +14,15 @@
 import Attributes from '@/components/creator/Attributes.vue'
 import Race from '@/components/creator/Race.vue'
 import Class from '@/components/creator/Class.vue'
+import Summary from '@/components/creator/Summary.vue'
 
 export default {
   name: 'CharacterCreator',
 	components: {
 		Attributes,
 		Race,
-		Class
+		Class,
+		Summary
 	},
 	data() {
 		return {
