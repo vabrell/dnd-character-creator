@@ -9,7 +9,8 @@ export default new Vuex.Store({
 			attributes: null,
 			race: null,
 			class: null
-		}
+		},
+		filter: ''
   },
   mutations: {
 		setAttributes(state, payload) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
 		},
 		setClass(state, payload) {
 			state.character.class = payload
+		},
+		setFilter(state, payload) {
+			state.filter = payload
 		}
   },
   actions: {
