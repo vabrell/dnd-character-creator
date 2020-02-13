@@ -6,6 +6,7 @@
 	</div>
 	<div class="grid grid-cols-3 gap-3 mt-2">
 		<div :class="{'col-span-3': !spellDescription}">
+			<span v-if="!spellList">Opening spellbook...</span>
 			<ul>
 				<li class="text-lg hover:bg-red-200 hover:text-red-600 py-1 px-2 rounded my-1" :class="{'bg-red-200': selected(spell.index), 'text-red-600': selected(spell.index)}" v-for="spell in spellList" :key="spell.index"><router-link class="w-full inline-block" :to="`/spellbook/${spell.index}`" @click.native="updateSelectedSpell">{{ spell.name }}</router-link></li>
 			</ul>
